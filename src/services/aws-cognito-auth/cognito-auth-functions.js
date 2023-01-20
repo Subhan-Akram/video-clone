@@ -6,8 +6,8 @@ import { Auth ,Amplify } from 'aws-amplify';
 Amplify.configure({
   Auth: {
     region: 'us-east-1', // your cognito region
-    userPoolId: 'us-east-1_rel64eqSf',  // your user pool id
-    userPoolWebClientId: '4rpt3a3iksc0ks6qbb66b995hh', // your app client id
+    userPoolId: 'us-east-1_PKNmv8cUV',  // your user pool id
+    userPoolWebClientId: '3huk87f12ecpirgnghinuh4tkc', // your app client id
 }
 });
 export  const resendCode = async (phone) => {
@@ -39,7 +39,7 @@ export  const resendCode = async (phone) => {
           console.log(">>>aws cognitpo>",phone_number,email)
         
           const signUpResponse = await Auth.signUp({
-              username:phone_number,
+              username:"subhan-ak",
               password:`${phone_number}-@Aa`, // temporary password
               attributes: {
                   email:email,
@@ -84,7 +84,7 @@ export const handleSignOut = async () => {
 
 
     export const sendOtp=async (user,answer)=>{
-debugger;
+// debugger;
         // Send the answer to the User Pool
         // This will throw an error if it’s the 3rd wrong answer
       
@@ -92,13 +92,49 @@ debugger;
         // but it might have been wrong (1st or 2nd time)
         // So we should test if the user is authenticated now
         try {
+            debugger
             let cognitoUser = await Auth.sendCustomChallengeAnswer(user, answer);
-            console.log("cognito ",cognitoUser)
-            // This will throw an error if the user is not yet authenticated:
-           return  cognitoUser
+        //     console.log("cognito ",cognitoUser)
+        //     // This will throw an error if the user is not yet authenticated:
+        //     let res=await Auth.currentSession();
+        //    return  res
+        Auth.currentAuthenticatedUser({
+            bypassCache: false // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+          })
+            .then((user) =>{ 
+                
+                // console.log(user)
+            return user})
+            .catch((err) => 
+            {
+            console.log(err)
+        return err    
+        }
+            );
         } catch(err) {
             console.log('Apparently the user did not enter the right code');
         return err
         }
     
     }
+
+
+// export const sendOtp=async (user,answer)=>{
+//  try{
+//     await  Auth.sendCustomChallengeAnswer(user,answer)
+//     .then((user) => {
+//     //   setUser(user);
+//     //   setMessage(SIGNEDIN);
+//     //   setSession(null);
+//     console.log("user >",user)
+//     return user;
+//     })
+//     .catch((err) => {
+//     //   setMessage(err.message);
+//     //   setOtp('');
+//       console.log(err);
+//       return err
+//     });
+//  }catch(err){
+//     return err
+//  }

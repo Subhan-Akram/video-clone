@@ -30,7 +30,8 @@ export const auth = createSlice({
     InvalidUserName:(state,{payload})=>{
       console.log("pay : ",payload)
       state.authErr=payload
-    }
+    },
+    errorRemove:(state)=>{state.authErr=" "}
 
   },
   
@@ -42,10 +43,11 @@ export const auth = createSlice({
     [SignUp.fulfilled]: (state, { payload }) => {
       state.loading = false
       state.entities = payload
+      
       state.signUp_status=true
       state.authErr=''
       state.user=payload
-     
+
      
     },
     [SignUp.rejected]: (state,{payload}) => {
@@ -71,6 +73,7 @@ export const auth = createSlice({
       state.loading = false
       state.authErr=''
       state.user=payload
+    
     },
     [SignIn.rejected]: (state,{payload}) => {
       state.loading = false
@@ -92,11 +95,12 @@ export const auth = createSlice({
     [SendOtp.rejected]: (state,{payload}) => {
       state.loading = false
       state.authErr=payload
+      
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {InvalidUserName} = auth.actions
+export const {InvalidUserName,errorRemove} = auth.actions
 
 export default auth.reducer

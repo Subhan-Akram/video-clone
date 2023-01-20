@@ -1,6 +1,6 @@
 import "../Auth/auth.scss";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { staggerOne, authFadeInUpVariants, modalVariants, authPageFadeInVariants } from "../../motionUtils";
@@ -13,8 +13,19 @@ import OneTimeOtp from "../../components/SignIn/OneTimeOtp";
 
 const Otp = () => {
 
-
+const navigate=useNavigate()
  const auth=useSelector(state=>state.auth);
+ useEffect(()=>{
+	
+
+	// debugger
+	if((auth.user.Session==undefined)){
+		console.log("auth user",auth.user?.Session==undefined)
+		alert("Ops! Otp Expired , login Again")
+		navigate("/login")
+	}
+
+ },[])
 
 	return (
 		<motion.div

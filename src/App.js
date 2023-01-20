@@ -18,10 +18,11 @@ const App = () => {
     const dispatch = useDispatch();
     const auth=useSelector(state=>state.auth);
     console.log("auth ",auth)
-    const userExist=auth.otp_exist
+    const userExist=auth.user
 
 
 console.log("user exist : ",userExist)
+
 
 
     return (

@@ -18,12 +18,19 @@ if ((res?.message==Messages.Invalid_Lambda_Response)) {
 
   return rejectWithValue()
 
-}else{
+}
+ if(res.message){
+  return rejectWithValue("Plz Try Again ,some issue in server")
+}
+else{
  
-
-  thunkAPI.navigate("/otp");
+ setTimeout(()=>{
+  
+  thunkAPI.navigate("/otp")
+ })
   localStorage.removeItem("user");
   setInLocalStorage("user",res)
+
   return fulfillWithValue(res)
 }
 }catch (err) {
@@ -77,12 +84,16 @@ try{
   console.log("thunk api",thunkAPI)
 const res=await sendOtp(thunkAPI.user,thunkAPI.code)
 console.log("res>>>>>",res)
+debugger;
 if (res==undefined || res=="No current user") {
   return rejectWithValue(`Enter a Valid Otp`)
+}else if(res.message=="user.sendCustomChallengeAnswer is not a function" || res.message==Messages.Invalid_Lambda_Response || res.message==Messages.Invalid_Session){
+  thunkAPI.navigate("/login")
+   return rejectWithValue("user signin expired")
 }
 
 //  console.log(">>>auto siugnun",autoSignIn)
-thunkAPI.navigate("/")
+// thunkAPI.navigate("/")
  return fulfillWithValue(res)
 
 }catch (err) {

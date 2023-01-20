@@ -1,20 +1,24 @@
 import "./auth.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignIn from "../../components/SignIn/SignIn";
 import SignUp from "../../components/SignUp/SignUp";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { staggerOne, authFadeInUpVariants, modalVariants, authPageFadeInVariants } from "../../motionUtils";
 // import { LOGO_URL, SIGNIN_BGIMG_URL } from "../../requests.js";
-import { useSelector } from "react-redux";
-import { selectAuthErrors } from "../../redux/auth/auth.selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { errorRemove} from '../../store/reducer-slice/auth';
 import netflix_bg from "../../assets/netflix_bg.jpg"
 import logo from "../../assets/logo_bg.png"
 
 const Auth = () => {
+	const dispatch=useDispatch();
+	
 const [userNameType,setUserNameType]=useState("")
 const [userName,setUserName]=useState("");
-
+useEffect(()=>{
+	dispatch(errorRemove())
+},[])
  const auth=useSelector(state=>state.auth);
 console.log("suth : ",auth,"user name type : ",userNameType)
 	return (

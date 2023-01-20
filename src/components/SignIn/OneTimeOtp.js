@@ -22,7 +22,7 @@ const OneTimeOtp = () => {
  const navigate=useNavigate();
 
  const auth=useSelector(state=>state.auth);
- const isLoading =auth.isLoading;
+ const isLoading =auth.loading;
 	const checkUserName=(val)=>{
 		let regexNumber = /^[0-9]+$/;
 		
@@ -44,7 +44,7 @@ const OneTimeOtp = () => {
 		// dispatch(emailSignInStart({ email, password }));
  
 		if(otpCode != "" &&  auth.user != undefined ){
-      debugger
+
 			dispatch(SendOtp({user:auth.user,code:otpCode,navigate}));
 		}else{
 			

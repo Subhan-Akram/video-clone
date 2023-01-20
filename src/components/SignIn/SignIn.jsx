@@ -15,13 +15,15 @@ import { Navigate,useNavigate } from "react-router-dom";
 const SignInC = ({setUserNameType,userName,setUserName}) => {
 	const dispatch = useDispatch();
 	console.log("user name type : ",setUserNameType)
-	const isLoading = useSelector(selectAuthLoadingState);
+	
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onTouched"
 	})
  const navigate=useNavigate();
 
-
+ const auth=useSelector(state=>state.auth);
+ const isLoading =auth.loading;
+ console.log(">>>>>>>>>>",isLoading)
 	const checkUserName=(val)=>{
 		let regexNumber = /^[0-9]+$/;
 		let regexEmail= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
